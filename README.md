@@ -12,7 +12,7 @@ As I am going back to Android Development, I start with the update of my coding 
 ## 🐈 Features List
 
 ### 1️⃣ Level 1: Basic Features
-1. Generate a random number between 1 and 100.
+1. Generate a random number between 1 and 100. ✅
 2. Prompt the user to guess the number.
 3. Compare the user's input with the target number and provide feedback ("Too high", "Too low", "Congratulations!").
 4. Implement a loop allowing the user to retry until they find the correct number.
