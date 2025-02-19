@@ -1,19 +1,21 @@
 fun main() {
     println("Guess Number App\nTry to guess the number by enter a number.")
-    val rand = (0..100).random()
-    var userNumber: Int? = null
-    var userAttempt = 0
+    println("Enter the max range you want to play with:")
+    val range = readln().toInt()
 
-    while (userNumber == null || userNumber != rand) {
+    val user = User(range)
+    val rand = (0..user.userRange).random()
+
+    while (user.userNumber == null || user.userNumber != rand) {
         println("Enter a number")
-        userNumber = readln().toInt()
-        if (userNumber > rand) {
+        user.userNumber = readln().toInt()
+        if (user.userNumber!! > rand) {
             println("Too high")
-        } else if (userNumber < rand) {
+        } else if (user.userNumber!! < rand) {
             println("Too low")
         }
-        userAttempt++
+        user.userAttempt++
     }
 
-    println("Bravo! The answer was $rand, and you try $userAttempt time(s).")
+    println("Bravo! The answer was $rand, and you try ${user.userAttempt} time(s).")
 }
