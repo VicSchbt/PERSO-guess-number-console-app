@@ -21,7 +21,7 @@ As I am going back to Android Development, I start with the update of my coding 
 ### 2️⃣ Level 2: UX and Robustness Improvements
 6. Allow the user to choose the range of numbers (e.g., between 1 and N).✅
 7. Handle input errors (e.g., prevent non-numeric inputs).✅
-8. Add an attempt counter with motivational messages ("Almost there!", "You're close!").
+8. Add an attempt counter with motivational messages ("Almost there!", "You're close!").✅
 9. Provide an option to replay without restarting the application.
 10. Add an "Easy" mode (unlimited attempts) and a "Hard" mode (limited attempts).
 

@@ -1,6 +1,6 @@
 fun main() {
     println("Guess Number App\nTry to guess the number by enter a number.")
-    println("Enter the max range you want to play with:")
+    println("Enter the max range you want to play with")
     val range = readUserInput()
 
     val user = User(range)
@@ -9,9 +9,9 @@ fun main() {
     while (user.userNumber == null || user.userNumber != rand) {
         user.userNumber = readUserInput()
         if (user.userNumber!! > rand) {
-            println("Too high")
+            println("Too high, ${getRandomMessage()}")
         } else if (user.userNumber!! < rand) {
-            println("Too low")
+            println("Too low, , ${getRandomMessage()}")
         }
         user.userAttempt++
     }
@@ -28,3 +28,5 @@ fun readUserInput(): Int {
     }
     return input.toInt()
 }
+
+fun getRandomMessage(): String = MOTIVATION_MESSAGES[MOTIVATION_MESSAGES.indices.random()]
