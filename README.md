@@ -15,7 +15,7 @@ As I am going back to Android Development, I start with the update of my coding 
 1. Generate a random number between 1 and 100.✅
 2. Prompt the user to guess the number.✅
 3. Compare the user's input with the target number and provide feedback ("Too high", "Too low", "Congratulations!").✅
-4. Implement a loop allowing the user to retry until they find the correct number.
+4. Implement a loop allowing the user to retry until they find the correct number.✅
 5. Display the number of attempts after the user wins.
 
 ### 2️⃣ Level 2: UX and Robustness Improvements
