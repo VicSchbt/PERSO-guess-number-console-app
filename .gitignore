@@ -2,7 +2,7 @@
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
-.idea
+.idea/
 
 ### Kotlin ###
 .kotlin
@@ -31,3 +31,6 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+### Additional Files ###
+leaderboard.txt
