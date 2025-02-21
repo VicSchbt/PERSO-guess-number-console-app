@@ -19,7 +19,7 @@ class LeaderBoard {
     records = records.sortedBy { it.last() }
   }
 
-  private fun display() {
+  fun display() {
     println()
     println("🏆 Leader Board 🏆")
     var i = 1

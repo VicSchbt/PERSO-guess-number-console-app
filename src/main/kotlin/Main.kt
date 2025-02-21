@@ -1,83 +1,60 @@
+import kotlin.system.exitProcess
+
 fun main() {
-  println("Guess Number App\nTry to guess the number by enter a number.")
-  println("Enter your name to play.")
-  val userName = readln()
+  println("🎲 Welcome to the Guess Number Game 🎲")
+  println("🎯 The goal is to guess the number")
 
   val leaderBoard = LeaderBoard()
   leaderBoard.initLeaderBoard()
 
-  val user = User(userName)
-  while (user.isPlaying) {
-    println("Enter the max range you want to play with")
-    val range = readUserInput()
-    val rand = (0..range).random()
-    user.gameMode = pickGameMode()
-    var isWinning = true
+  while (true) {
+    println("What do you want to do? [1] 🎲Play! [2] 🏆Leaderboard [3] 👋Quit")
+    val menuItem = menuItemFromId(readIntUserInput(3))
 
-    while (user.userNumber == null || user.userNumber != rand) {
-
-      user.userNumber = readUserInput()
-      if (user.userNumber!! > rand) {
-        println("Too high, ${getRandomMessage()}")
-      } else if (user.userNumber!! < rand) {
-        println("Too low, , ${getRandomMessage()}")
-      }
-      user.userAttempt++
-      if (user
-          .gameMode == GameMode.HARD && user.userAttempt >=
-        HARD_MODE_MAX_ATTEMPT
-      ) {
-        println("🥺Oh no! You loose!")
-        isWinning = false
-        break
-      }
+    when (menuItem) {
+      MenuItem.GAME -> playGame(leaderBoard)
+      MenuItem.LEADERBOARD -> leaderBoard.display()
+      MenuItem.QUIT -> exitProcess(0)
     }
-
-    if (isWinning) println(
-      "🎉 Bravo! The answer was $rand, and you try " +
-          "${
-            user
-              .userAttempt
-          } time(s)."
-    )
-    leaderBoard.saveRecord(user.name, user.userAttempt)
-    user.isPlaying = isTheUserKeepGoing()
   }
-
 }
 
-fun readUserInput(): Int {
-  var input: String? = null
-  while (input == null || input.toIntOrNull() == null) {
-    if (input != null) println("You enter a wrong format 😬")
-    println("🎲 Enter a number")
-    input = readln()
+fun playGame(leaderBoard: LeaderBoard) {
+  val game = Game()
+  while (game.isRunning) {
+    game.players.forEach { player ->
+      if (game.isRunning && playTurn(player, game)) {
+        playerWins(player, game, leaderBoard)
+      }
+    }
+    if (game.isRunning && game.isGameEnds()) game.isTheGameKeepGoing()
+    game.turnNumber++
   }
-  return input.toInt()
+}
+
+fun playTurn(player: Player, game: Game): Boolean {
+  var playerWins = false
+  println("\n${player.name} is your turn")
+  player.chosenNumber = readIntUserInput(null)
+  when  {
+    player.chosenNumber!! > game.numberToGuess -> println("Too high, ${getRandomMessage()}\n")
+    player.chosenNumber!! < game.numberToGuess -> println("Too low, , ${getRandomMessage()}\n")
+    else -> playerWins = true
+  }
+  player.attempt++
+  return playerWins
+}
+
+fun playerWins(player: Player, game: Game, leaderBoard: LeaderBoard) {
+  println("🎉 Bravo! The answer was ${game.maxRange}, and you try " +
+      "${player.attempt} time(s)."
+  )
+  leaderBoard.saveRecord(player.name, player.attempt)
+  game.isRunning = false
 }
 
 fun getRandomMessage(): String =
   MOTIVATION_MESSAGES[MOTIVATION_MESSAGES.indices.random()]
 
-fun isTheUserKeepGoing(): Boolean {
-  var userInput: String? = null
-  while (userInput == null) {
-    println("Do you want to play again? [y/n]")
-    userInput = readln()
 
-    if (userInput != "y" && userInput != "n") userInput = null
-  }
-  return userInput == "y"
-}
 
-fun pickGameMode(): GameMode {
-  var userInput: String? = null
-  while (userInput == null) {
-    println("Pick your mode: 1-easy 2-hard")
-    userInput = readln()
-
-    if (userInput != "1" && userInput != "2") userInput = null
-  }
-  if (userInput == "1") return GameMode.EASY
-  return GameMode.HARD
-}
