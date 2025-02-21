@@ -1,7 +1,7 @@
-enum class MenuItem(val id: Int) {
-  GAME(1),
-  LEADERBOARD(2),
-  QUIT(3)
+enum class MenuItem {
+  GAME,
+  LEADERBOARD,
+  QUIT
 }
 
 fun menuItemFromId(id: Int): MenuItem {
