@@ -1,3 +1,5 @@
+package utils
+
 fun readIntUserInput(maxRange: Int?): Int {
   var input: Int? = null
   while (input == null) {

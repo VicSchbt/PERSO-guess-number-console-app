@@ -1,4 +1,6 @@
-class Player(val name:String) {
+package model
+
+open class Player(val name:String) {
     var chosenNumber: Int? = null
     var attempt = 0
 }

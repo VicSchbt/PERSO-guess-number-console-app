@@ -1,10 +1,16 @@
+package model
+
+import utils.HARD_MODE_MAX_ATTEMPT
+import utils.readIntUserInput
+
 class Game() {
-  var gameMode: GameMode = GameMode.EASY
+  private var gameMode: GameMode = GameMode.EASY
   var players: List<Player>
     private set
   var maxRange: Int
   var numberToGuess: Int
   var isRunning = true
+  var isRobotPlaying = false
   var turnNumber = 1
 
   init {
@@ -13,6 +19,7 @@ class Game() {
     println("Enter the max range you want to play with")
     maxRange = readIntUserInput(null)
     numberToGuess = (1..maxRange).random()
+    if (players.size == 1) askForRobot()
   }
 
   private fun pickGameMode(): GameMode {
@@ -36,6 +43,15 @@ class Game() {
       players += Player(userName)
     }
     return players.toList()
+  }
+
+  private fun askForRobot() {
+    println("🤖 Do you want to play with an AI robot? [1]✅Yes [2]❌No")
+    val userInput = readIntUserInput(2)
+    if (userInput == 1) {
+      players += AIPlayer(maxRange)
+      isRobotPlaying = true
+    }
   }
 
   fun isGameEnds(): Boolean {

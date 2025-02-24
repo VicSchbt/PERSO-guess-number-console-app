@@ -1,7 +1,10 @@
+import model.*
+import utils.MOTIVATION_MESSAGES
+import utils.readIntUserInput
 import kotlin.system.exitProcess
 
 fun main() {
-  println("🎲 Welcome to the Guess Number Game 🎲")
+  println("🎲 Welcome to the Guess Number model.Game 🎲")
   println("🎯 The goal is to guess the number")
 
   val leaderBoard = LeaderBoard()
@@ -35,10 +38,29 @@ fun playGame(leaderBoard: LeaderBoard) {
 fun playTurn(player: Player, game: Game): Boolean {
   var playerWins = false
   println("\n${player.name} is your turn")
-  player.chosenNumber = readIntUserInput(null)
+  if (player is AIPlayer) {
+    player.chosenNumber = player.pickNumber()
+    println(player.chosenNumber)
+  } else {
+    player.chosenNumber = readIntUserInput(null)
+  }
   when  {
-    player.chosenNumber!! > game.numberToGuess -> println("Too high, ${getRandomMessage()}\n")
-    player.chosenNumber!! < game.numberToGuess -> println("Too low, , ${getRandomMessage()}\n")
+    player.chosenNumber!! > game.numberToGuess -> {
+      println("Too high, ${getRandomMessage()}\n")
+      if (player is AIPlayer) {
+        player.maxRange = player.chosenNumber!! - 1
+      } else if (game.isRobotPlaying) {
+        (game.players[1] as AIPlayer).maxRange = player.chosenNumber!! - 1
+      }
+    }
+    player.chosenNumber!! < game.numberToGuess -> {
+      println("Too low, , ${getRandomMessage()}\n")
+      if (player is AIPlayer) {
+        player.minRange = player.chosenNumber!! + 1
+      } else if (game.isRobotPlaying) {
+        (game.players[1] as AIPlayer).minRange = player.chosenNumber!! + 1
+      }
+    }
     else -> playerWins = true
   }
   player.attempt++
@@ -46,10 +68,10 @@ fun playTurn(player: Player, game: Game): Boolean {
 }
 
 fun playerWins(player: Player, game: Game, leaderBoard: LeaderBoard) {
-  println("🎉 Bravo! The answer was ${game.maxRange}, and you try " +
+  println("🎉 Bravo! The answer was ${game.numberToGuess}, and you try " +
       "${player.attempt} time(s)."
   )
-  leaderBoard.saveRecord(player.name, player.attempt)
+  if (player !is AIPlayer) leaderBoard.saveRecord(player.name, player.attempt)
   game.isRunning = false
 }
 

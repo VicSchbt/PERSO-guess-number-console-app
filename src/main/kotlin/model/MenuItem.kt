@@ -1,3 +1,5 @@
+package model
+
 enum class MenuItem {
   GAME,
   LEADERBOARD,
