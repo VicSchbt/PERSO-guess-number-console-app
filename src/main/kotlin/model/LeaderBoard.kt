@@ -5,7 +5,7 @@ import java.io.File
 class LeaderBoard {
   private val leaderBoardFileName = "leaderboard.txt"
   private val file = File(leaderBoardFileName)
-  private lateinit var records: List<String>
+  private var records: List<String>
 
   init {
     if (!file.exists()) file.createNewFile()
