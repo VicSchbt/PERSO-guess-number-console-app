@@ -8,7 +8,6 @@ fun main() {
   println("🎯 The goal is to guess the number")
 
   val leaderBoard = LeaderBoard()
-  leaderBoard.initLeaderBoard()
 
   while (true) {
     println("What do you want to do? [1] 🎲Play! [2] 🏆Leaderboard [3] 👋Quit")
@@ -71,7 +70,7 @@ fun playerWins(player: Player, game: Game, leaderBoard: LeaderBoard) {
   println("🎉 Bravo! The answer was ${game.numberToGuess}, and you try " +
       "${player.attempt} time(s)."
   )
-  if (player !is AIPlayer) leaderBoard.saveRecord(player.name, player.attempt)
+  if (player !is AIPlayer) leaderBoard.saveRecord(player.name, player.attempt, game.maxRange)
   game.isRunning = false
 }
 

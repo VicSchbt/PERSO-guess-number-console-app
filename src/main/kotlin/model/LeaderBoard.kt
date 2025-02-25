@@ -7,18 +7,17 @@ class LeaderBoard {
   private val file = File(leaderBoardFileName)
   private lateinit var records: List<String>
 
-  fun initLeaderBoard() {
-    if (file.exists()) {
-      records = file.readLines()
+  init {
+    if (!file.exists()) file.createNewFile()
+    records = file.readLines()
+    if (records.isNotEmpty()) {
       order()
       display()
-    } else {
-      file.createNewFile()
     }
   }
 
   private fun order() {
-    records = records.sortedBy { it.last() }
+    records = records.sortedBy { it.split('|')[1] }
   }
 
   fun display() {
@@ -38,10 +37,14 @@ class LeaderBoard {
     println()
   }
 
-  fun saveRecord(userName: String, attempts: Int) {
-    val record = "$userName|$attempts\n"
+  fun saveRecord(userName: String, attempts: Int, maxRange: Int) {
+    val record = "$userName|${computeScore(attempts, maxRange)}\n"
     records += record
     file.appendText(record)
+  }
+
+  private fun computeScore(attempts: Int, maxRange: Int): Double {
+    return Math.round(maxRange.toDouble() / attempts.toDouble() * 10.0) / 10.0
   }
 
 }

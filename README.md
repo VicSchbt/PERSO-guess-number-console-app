@@ -34,8 +34,8 @@ As I am going back to Android Development, I start with the update of my coding 
 5. Display statistics at the end of the game (average attempts, number of games played, etc.).
 
 ### Other ideas
-[ ] Improve the leader board for including the maxRange parameter and the number of attempts, for instance, someone 
+- [x] Improve the leader board for including the maxRange parameter and the number of attempts, for instance, someone 
 trying 5 times on a range of 20 or 100 is not the same final score
-[ ] Add some test files in order to practice testing in Kotlin
+- [ ] Add some test files in order to practice testing in Kotlin
 
 ## 🔗 Useful Links
